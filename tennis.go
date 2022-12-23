@@ -8,9 +8,7 @@ import (
 	"time"
 )
 
-var POINT_TO_WIN = 5 //quantidade de pontos para vencder
-var GAMES = 1
-var SETS = 1
+var POINT_TO_WIN = 4 //quantidade de pontos para vencder
 
 /* Um jogador*/
 type person struct {
@@ -37,6 +35,7 @@ func playGame(waitGp *sync.WaitGroup, tennisCourt chan int, playerCurrent *perso
 			fmt.Println(playerCurrent.name, " ganhou!!")
 			return
 		}
+
 		fmt.Print("Jogada ", jackpot)
 		fmt.Println(" - ", playerCurrent.name, " recebeu a bola")
 		num := rand.Intn(100)
@@ -77,14 +76,10 @@ func declareVictorius(p1 *person, p2 *person) {
 }
 
 func main() {
-	var sets int
-	flag.IntVar(&sets, "sets", 5, "numero de sets no game")
-	var games int
-	flag.IntVar(&games, "games", 5, "numero de games no jogo")
 	var points int
 	flag.IntVar(&points, "points", 4, "numero de points por game")
 	flag.Parse()
-
+	fmt.Println(points)
 	//RF: os pontos precisam ser maiores que quatro
 	if points >= 4 {
 		POINT_TO_WIN = points
