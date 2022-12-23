@@ -25,7 +25,7 @@ func (p *person) lost1Ball() int {
 	return p.lostBalls
 }
 
-func play(waitGp *sync.WaitGroup, tennisCourt chan int, playerCurrent *person) {
+func playGame(waitGp *sync.WaitGroup, tennisCourt chan int, playerCurrent *person) {
 	defer waitGp.Done() //para finalizar
 	for {               //loop infinito
 		jackpot, open := <-tennisCourt
@@ -36,7 +36,6 @@ func play(waitGp *sync.WaitGroup, tennisCourt chan int, playerCurrent *person) {
 		fmt.Print("Jogada ", jackpot)
 		fmt.Println(" - ", playerCurrent.name, " recebeu a bola")
 		num := rand.Intn(100)
-		fmt.Println("Numero randomico", num)
 		if num <= 50 {
 			playerCurrent.lost1Ball()
 			fmt.Println(playerCurrent.name, " não rebateu")
@@ -92,8 +91,8 @@ func main() {
 
 	waitGp.Add(2) //Adicionar com dois jogadores
 
-	go play(&waitGp, tennisCourt, &player1)
-	go play(&waitGp, tennisCourt, &player2)
+	go playGame(&waitGp, tennisCourt, &player1)
+	go playGame(&waitGp, tennisCourt, &player2)
 
 	tennisCourt <- 1
 	waitGp.Wait()
