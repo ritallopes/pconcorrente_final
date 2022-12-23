@@ -1,3 +1,12 @@
+# Trabalho da Unidade 3 de programação Concorrente
+## Aluna: Rita de Cássia Lino Lopes
+
+### Problema escolhido: Problema 1: Um Jogo de Tênis
+#### Executar
+   Utilizar o comando ```go run .``` ou o executavel tennis.exe   
+   Para definir a quantidade de pontos que o vencedor deve atingir usar a flag -points
+
+#### Referências
 https://jrblog.com.br/golang-10-goroutine-canais/
 
 https://www.digitalocean.com/community/tutorials/understanding-init-in-go

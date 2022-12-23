@@ -1,3 +1,5 @@
+// Pacote contendo toda a implementação do
+// Problema do Jogo de Tenis
 package main
 
 import (
@@ -31,30 +33,30 @@ func playGame(waitGp *sync.WaitGroup, tennisCourt chan int, playerCurrent *perso
 	defer waitGp.Done() //para finalizar
 	for {               //loop infinito
 		jackpot, open := <-tennisCourt
-		if !open {
-			fmt.Println(playerCurrent.name, " ganhou!!")
+		if !open { //verifica se o jogo ja finalizou
+			fmt.Println(playerCurrent.name, " ganhou!!") //Caso sim, o jogador atual venceu
 			return
 		}
 
 		fmt.Print("Jogada ", jackpot)
 		fmt.Println(" - ", playerCurrent.name, " recebeu a bola")
-		num := rand.Intn(100)
-		if num <= 50 { //menor que 50 perdeu a bola
-			playerCurrent.lost1Ball()
+		num := rand.Intn(100) //gera um numero randomico menor que 100
+		if num <= 50 {        //menor que 50 perdeu a bola
+			playerCurrent.lost1Ball() //perdeu a bola, ponto para o adversario
 			fmt.Println(playerCurrent.name, " não rebateu")
 			if playerCurrent.lostBalls >= POINT_TO_WIN {
-				fmt.Println(playerCurrent.name, " perdeu!")
+				fmt.Println(playerCurrent.name, " perdeu!") //o adversario atingiu a pontuacao
 				fmt.Println()
 				close(tennisCourt)
 				return
 			}
 
 		} else {
-			fmt.Println(playerCurrent.name, " rebateu e esperando a bola!")
+			fmt.Println(playerCurrent.name, " rebateu e esperando a bola!") //passa para o adversario sem perder
 		}
 		fmt.Println("")
 
-		jackpot++
+		jackpot++ //Proxima jogada
 		tennisCourt <- jackpot
 
 	}
@@ -70,16 +72,18 @@ func init() {
 	rand.Seed(time.Now().UnixNano())
 }
 
+// Funcao para contagem dos pontos finais
 func declareVictorius(p1 *person, p2 *person) {
 	fmt.Println(p1.name, " fez ", p2.lostBalls)
 	fmt.Println(p2.name, " fez ", p1.lostBalls)
 }
 
+/*funcao principal*/
 func main() {
+	//Leitura da quantidade de pontos definidos
 	var points int
 	flag.IntVar(&points, "points", 4, "numero de points por game")
 	flag.Parse()
-	fmt.Println(points)
 	//RF: os pontos precisam ser maiores que quatro
 	if points >= 4 {
 		POINT_TO_WIN = points
