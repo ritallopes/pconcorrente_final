@@ -78,10 +78,12 @@ func main() {
 	var games int
 	flag.IntVar(&games, "games", 5, "numero de games no jogo")
 	var points int
-	flag.IntVar(&points, "points", 5, "numero de points por set")
+	flag.IntVar(&points, "points", 4, "numero de points por game")
 	flag.Parse()
 
-	POINT_TO_WIN = points
+	if points >= 4 {
+		POINT_TO_WIN = points
+	}
 
 	var waitGp sync.WaitGroup // wait group passado como ponteiro porque vou usar em várias funcoes
 
