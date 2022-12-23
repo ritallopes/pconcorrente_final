@@ -24,11 +24,7 @@ func (p *person) add1Point() int {
 	return p.points
 }
 
-func verifyVictorious() {
-
-}
-
-func initGame(waitGp *sync.WaitGroup, tennisCourt chan int, playerCurrent *person) {
+func play(waitGp *sync.WaitGroup, tennisCourt chan int, playerCurrent *person) {
 	defer waitGp.Done() //para finalizar
 	for {               //loop infinito
 		jackpot, open := <-tennisCourt
@@ -81,8 +77,8 @@ func main() {
 
 	waitGp.Add(2) //Adicionar com dois jogadores
 
-	go initGame(&waitGp, tennisCourt, &player1)
-	go initGame(&waitGp, tennisCourt, &player2)
+	go play(&waitGp, tennisCourt, &player1)
+	go play(&waitGp, tennisCourt, &player2)
 	tennisCourt <- 1
 	waitGp.Wait()
 }
