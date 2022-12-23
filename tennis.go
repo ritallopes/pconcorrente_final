@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"math/rand"
 	"sync"
@@ -67,6 +68,14 @@ func init() {
 }
 
 func main() {
+	var sets int
+	flag.IntVar(&sets, "sets", 5, "numero de sets no game")
+	var games int
+	flag.IntVar(&games, "games", 5, "numero de games no jogo")
+	var points int
+	flag.IntVar(&points, "points", 5, "numero de points por set")
+	flag.Parse()
+
 	var waitGp sync.WaitGroup // wait group passado como ponteiro porque vou usar em várias funcoes
 
 	fmt.Println("Iniciando jogo!!!")
