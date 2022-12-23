@@ -9,10 +9,14 @@ import (
 )
 
 var POINT_TO_WIN = 5 //quantidade de pontos para vencder
+var GAMES = 1
+var SETS = 1
+
 /* Um jogador*/
 type person struct {
 	name      string
 	lostBalls int //bola perdida e ponto adversario
+	wonGames  int
 }
 
 func newPerson(name string) *person {
@@ -36,7 +40,7 @@ func playGame(waitGp *sync.WaitGroup, tennisCourt chan int, playerCurrent *perso
 		fmt.Print("Jogada ", jackpot)
 		fmt.Println(" - ", playerCurrent.name, " recebeu a bola")
 		num := rand.Intn(100)
-		if num <= 50 {
+		if num <= 50 { //menor que 50 perdeu a bola
 			playerCurrent.lost1Ball()
 			fmt.Println(playerCurrent.name, " não rebateu")
 			if playerCurrent.lostBalls >= POINT_TO_WIN {
@@ -47,7 +51,7 @@ func playGame(waitGp *sync.WaitGroup, tennisCourt chan int, playerCurrent *perso
 			}
 
 		} else {
-			fmt.Println(playerCurrent.name, " rebateu!")
+			fmt.Println(playerCurrent.name, " rebateu e esperando a bola!")
 		}
 		fmt.Println("")
 
@@ -81,6 +85,7 @@ func main() {
 	flag.IntVar(&points, "points", 4, "numero de points por game")
 	flag.Parse()
 
+	//RF: os pontos precisam ser maiores que quatro
 	if points >= 4 {
 		POINT_TO_WIN = points
 	}
