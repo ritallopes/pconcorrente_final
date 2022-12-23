@@ -81,6 +81,8 @@ func main() {
 	flag.IntVar(&points, "points", 5, "numero de points por set")
 	flag.Parse()
 
+	POINT_TO_WIN = points
+
 	var waitGp sync.WaitGroup // wait group passado como ponteiro porque vou usar em várias funcoes
 
 	fmt.Println("Iniciando jogo!!!")
